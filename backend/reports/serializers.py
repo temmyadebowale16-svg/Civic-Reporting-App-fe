@@ -81,4 +81,4 @@ class ReportCreateSerializer(serializers.ModelSerializer):
         for image in images:
             ReportPhoto.objects.create(report=report, image=image)
         return report
-        return report
+
