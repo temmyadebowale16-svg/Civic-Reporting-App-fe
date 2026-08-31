@@ -25,7 +25,7 @@ class StandardPageNumberPagination(pagination.PageNumberPagination):
 class LoginThrottle(AnonRateThrottle):
     """Rate limit login attempts to prevent brute force attacks."""
     scope = "login"
-    rate = "5/5m"  # 5 attempts per 5 minutes per IP
+    rate = "5/minute"  # 5 attempts per 5 minutes per IP
 
     def throttle_success(self):
         """Called when a request is allowed."""
