@@ -1,41 +1,406 @@
 # Civic Reporting App
 
+A full-stack web application that allows citizens to report civic and community-related issues such as damaged roads, poor waste management, water problems, electricity issues, and other public infrastructure concerns.
+
+The application provides a simple platform for submitting reports, tracking civic issues, and managing reported problems through a web-based interface.
+
+**Live Demo:** [Civic Reporting App](https://civic-reporting-app-fe.onrender.com)
+
+---
+
 ## Introduction
+
+The **Civic Reporting App** was developed to provide a digital platform where citizens can easily report problems affecting their communities.
+
+Instead of relying solely on traditional reporting channels, users can submit civic issues through a web application. Reports can contain relevant information about the issue, helping make it easier to identify and manage community problems.
+
+The project was built as a full-stack application, combining a React frontend with a Django REST API backend and a relational database.
+
+---
 
 ## Problem Being Solved
 
+Many communities experience problems such as:
+
+- Damaged roads and potholes
+- Poor waste management
+- Water supply problems
+- Electricity-related issues
+- Damaged public infrastructure
+- Other community and environmental concerns
+
+In many cases, reporting these problems can be difficult because citizens may not know the appropriate channel to use or may have limited access to organized reporting systems.
+
+The Civic Reporting App provides a centralized digital platform where users can submit civic reports and interact with the reporting system more efficiently.
+
+---
+
 ## Key Features
+
+- User-friendly civic issue reporting interface
+- User authentication
+- Civic issue submission
+- Issue categorization
+- Report descriptions
+- Image/file upload support
+- Report management
+- REST API integration
+- Responsive frontend
+- Backend data management
+- Database persistence
+- Secure API communication
+- Production deployment
+
+---
 
 ## How I Built It
 
+The application was developed using a modern full-stack architecture.
+
 ### Frontend
+
+The frontend was built with:
+
+- **React**
+- **Vite**
+- **JavaScript**
+- **CSS**
+
+React was used to create reusable UI components and manage the application interface, while Vite was used as the frontend build tool.
+
+The frontend communicates with the Django backend through REST API endpoints.
 
 ### Backend
 
+The backend was developed using:
+
+- **Python**
+- **Django**
+- **Django REST Framework**
+- **Gunicorn**
+- **django-cors-headers**
+- **WhiteNoise**
+
+Django handles the application's backend logic, authentication, API endpoints, database operations, and file handling.
+
+Django REST Framework was used to create the API consumed by the React frontend.
+
+Gunicorn is used as the production WSGI server when the application is deployed.
+
 ### Database
 
+The application uses a relational database.
+
+- **PostgreSQL** is used for production.
+- **SQLite** can be used for local development.
+
+Database configuration is handled using `dj-database-url`, allowing the application to use environment variables for the production database connection.
+
 ### API
+
+The backend exposes REST API endpoints under:
+
+```text
+/api/
+```
+
+The React frontend communicates with these endpoints to perform operations such as retrieving, creating, and managing civic reports.
+
+---
 
 ## Installation & Setup
 
 ### Prerequisites
 
+Before running the project locally, make sure you have installed:
+
+- Python 3.x
+- Node.js
+- npm
+- Git
+- PostgreSQL (for PostgreSQL-based local development)
+
 ### Clone the Repository
+
+Clone the repository:
+
+```bash
+git clone https://github.com/temmyadebowale16-svg/Civic-Reporting-App-fe.git
+```
+
+Navigate into the project:
+
+```bash
+cd Civic-Reporting-App-fe
+```
+
+---
 
 ### Frontend Setup
 
+Navigate to the frontend directory:
+
+```bash
+cd frontend
+```
+
+Install the dependencies:
+
+```bash
+npm install
+```
+
+Start the Vite development server:
+
+```bash
+npm run dev
+```
+
+The frontend will normally be available at:
+
+```text
+http://localhost:5173
+```
+
+---
+
 ### Backend Setup
+
+Open another terminal and navigate to the backend directory:
+
+```bash
+cd backend
+```
+
+Create a virtual environment:
+
+```bash
+python -m venv venv
+```
+
+Activate the virtual environment.
+
+**Windows:**
+
+```bash
+venv\Scripts\activate
+```
+
+**macOS/Linux:**
+
+```bash
+source venv/bin/activate
+```
+
+Install the backend dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
 
 ### Database Setup
 
+For local development, the project can use SQLite by default.
+
+Run the migrations:
+
+```bash
+python manage.py migrate
+```
+
+If PostgreSQL is being used, configure the appropriate `DATABASE_URL` environment variable before running migrations.
+
+---
+
 ### Running the Application
+
+Start the Django development server:
+
+```bash
+python manage.py runserver
+```
+
+The backend will normally be available at:
+
+```text
+http://127.0.0.1:8000
+```
+
+Start the React development server separately:
+
+```bash
+npm run dev
+```
+
+The application can then be accessed through the Vite development URL.
+
+---
 
 ## Project Structure
 
+```text
+Civic-Reporting-App-fe/
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── dist/
+│   ├── package.json
+│   └── vite.config.js
+│
+├── backend/
+│   ├── civicproject/
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── wsgi.py
+│   │   └── ...
+│   │
+│   ├── reports/
+│   ├── manage.py
+│   ├── requirements.txt
+│   └── ...
+│
+├── build.sh
+├── README.md
+└── ...
+```
+
+---
+
 ## Challenges Faced
+
+### 1. Connecting the Frontend and Backend
+
+One of the challenges was connecting the React frontend to the Django REST API.
+
+The frontend initially relied on a local backend address, which meant API requests worked during local development but needed to be configured correctly for production.
+
+### 2. Deploying a Full-Stack Application
+
+Deploying both React/Vite and Django from the same repository required configuring the build process so that Render could:
+
+1. Install the frontend dependencies.
+2. Build the React application.
+3. Install the Python dependencies.
+4. Collect Django static files.
+5. Run database migrations.
+6. Start Django using Gunicorn.
+
+### 3. Django `ALLOWED_HOSTS`
+
+During deployment, Django initially returned:
+
+```text
+400 Bad Request
+```
+
+The problem was related to the production hostname not being included in Django's allowed hosts configuration.
+
+This was resolved by configuring the Render environment variables correctly.
+
+### 4. Serving Vite Static Assets
+
+Another deployment issue involved React's generated JavaScript and CSS files.
+
+Vite initially generated asset URLs such as:
+
+```text
+/assets/index.js
+```
+
+while Django was configured to serve static files through:
+
+```text
+/static/
+```
+
+The Vite configuration was adjusted so that production assets are referenced through Django's static-file system.
+
+### 5. Environment Variables
+
+The application required different configuration values for local development and production, including:
+
+- `SECRET_KEY`
+- `DEBUG`
+- `ALLOWED_HOSTS`
+- `DATABASE_URL`
+- `CORS_ALLOWED_ORIGINS`
+- `CSRF_TRUSTED_ORIGINS`
+
+Managing these settings through environment variables helped keep production configuration separate from the source code.
+
+---
 
 ## Lessons Learned
 
+Building and deploying this project provided several important lessons.
+
+### Full-Stack Integration
+
+I learned how a React frontend communicates with a Django backend through REST APIs and how frontend and backend components work together as a complete application.
+
+### API Development
+
+I gained practical experience creating and consuming REST API endpoints using Django REST Framework.
+
+### Database Management
+
+I learned how Django migrations work and how to configure a production database using environment variables.
+
+### Production Deployment
+
+I learned that an application working locally does not automatically mean it will work in production.
+
+Production deployment introduced additional considerations such as:
+
+- Environment variables
+- Allowed hosts
+- CORS
+- CSRF
+- Static files
+- Production WSGI servers
+- Database configuration
+- Build commands
+
+### Debugging
+
+The deployment process improved my ability to read server logs, identify errors, trace their causes, and apply targeted fixes instead of changing multiple parts of the application unnecessarily.
+
+---
+
 ## Future Improvements
 
+Potential improvements for future versions include:
+
+- Admin dashboard improvements
+- Report status tracking
+- Email notifications
+- Push notifications
+- Location/GPS-based reporting
+- Interactive map integration
+- Advanced search and filtering
+- Report analytics and statistics
+- User profile improvements
+- Role-based permissions
+- Improved image processing
+- Automated testing
+- CI/CD pipeline
+- More detailed reporting and analytics
+
+---
+
 ## Conclusion
+
+The Civic Reporting App demonstrates the development and deployment of a complete full-stack web application.
+
+The project combines **React, Vite, Python, Django, Django REST Framework, and a relational database** to provide a platform for reporting and managing civic issues.
+
+Beyond building the application itself, the project provided practical experience with **API integration, database management, authentication, file handling, environment configuration, debugging, and production deployment**.
+
+The application is currently deployed and available online:
+
+**Live Demo:** https://civic-reporting-app-fe.onrender.com
+
+---
