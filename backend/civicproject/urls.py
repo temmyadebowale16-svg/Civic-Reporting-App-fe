@@ -13,11 +13,13 @@ urlpatterns = [
 if not settings.DEBUG:
     urlpatterns += [
         re_path(
-            r'^(?!api/|admin/|media/|static/).*',
-            TemplateView.as_view(
-                template_name='index.html'
-            ),
-        ),
+    r'^(?!api/|admin/|media/|static/|assets/).*',
+    TemplateView.as_view(
+        template_name='index.html'
+    ),
+),
+
+
     ]
 
 if settings.DEBUG:

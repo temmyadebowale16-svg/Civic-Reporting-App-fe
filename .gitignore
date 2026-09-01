@@ -1,0 +1,46 @@
+# Node
+node_modules/
+frontend/node_modules/
+
+# Build files
+frontend/dist/
+dist/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Django
+*.sqlite3
+db.sqlite3
+
+# Uploaded/media files
+backend/media/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python testing/cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log

@@ -139,6 +139,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 FRONTEND_DIST = BASE_DIR.parent / 'frontend' / 'dist'
 
+STATICFILES_DIRS = [
+    FRONTEND_DIST,
+]
+
 # Media files (uploaded report photos)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -189,7 +193,7 @@ SECURE_HSTS_SECONDS = config('SECURE_HSTS_SECONDS', default=0, cast=int)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = config('SECURE_HSTS_INCLUDE_SUBDOMAINS', default=False, cast=bool)
 
 # CSRF Configuration
-CSRF_TRUSTED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:5173,http://127.0.0.1:5173', cast=Csv())
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost:5173,http://127.0.0.1:5173', cast=Csv())
 
 # File Upload Limits
 DATA_UPLOAD_MAX_MEMORY_SIZE = config('DATA_UPLOAD_MAX_MEMORY_SIZE', default=5242880, cast=int)  # 5 MB
